@@ -1,0 +1,55 @@
+.de-shell {
+  max-width: 52rem;
+  position: relative;
+}
+
+.de-step {
+  margin-top: 0.75rem;
+}
+
+.de-sig {
+  touch-action: none;
+  border: 1px solid #c9c9c9;
+  border-radius: 0.25rem;
+  background: #fafafa;
+  display: block;
+  width: 100%;
+  /* max-width: 28rem; */
+  height: 8.75rem;
+}
+
+.de-sig-row {
+  margin-bottom: 1rem;
+}
+
+.de-preview {
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  max-height: 22rem;
+  overflow: auto;
+}
+
+/* Keep signature canvases in DOM for PDF export; hide off-screen when not on step 2 */
+.de-sig-panel {
+  margin-top: 0.75rem;
+}
+
+.de-sig-panel--hidden {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  width: 32rem;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.de-sig-panel:not(.de-sig-panel--hidden) .de-sig-hint {
+  display: block;
+}
+
+.de-sig-panel--hidden .de-sig-hint {
+  display: none;
+}

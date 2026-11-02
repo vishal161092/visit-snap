@@ -1,0 +1,213 @@
+<template>
+  <div class="de-vo">
+    <div class="de-vo-blob de-vo-blob-1" aria-hidden="true"></div>
+    <div class="de-vo-blob de-vo-blob-2" aria-hidden="true"></div>
+
+    <div class="de-vo-surface">
+      <header class="de-vo-hdr">
+        <div class="de-vo-hdr-left">
+          <div class="de-vo-ico" aria-hidden="true">
+            <svg
+              class="de-vo-ico-svg"
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+            >
+              <path
+                d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M19 10v2a7 7 0 0 1-14 0v-2"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="12"
+                y1="19"
+                x2="12"
+                y2="23"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="8"
+                y1="23"
+                x2="16"
+                y2="23"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <h2 class="de-vo-title">Voice Recording</h2>
+          </div>
+        </div>
+        <div class="de-vo-ctrls">
+          <button
+            class="de-vo-btn de-vo-btn-start"
+            type="button"
+            aria-label="Start recording"
+            onclick={handleStart}
+            disabled={startDisabled}
+          >
+            <svg class="de-vo-ico-ctl" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="currentColor" />
+            </svg>
+            Start
+          </button>
+          <button
+            class={classStop}
+            type="button"
+            aria-label="Stop recording"
+            onclick={handleStop}
+            disabled={stopDisabled}
+          >
+            <svg class="de-vo-ico-ctl" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor" />
+            </svg>
+            Stop
+          </button>
+        </div>
+      </header>
+
+      <div class="de-vo-arena" role="region" aria-label="Recording">
+        <div class="de-vo-arena-bg" aria-hidden="true"></div>
+
+        <div class="de-vo-arena-top">
+          <div class="de-vo-rec" aria-live="polite" aria-atomic="true">
+            <span class={classRecDot}></span>
+            <span class={classRecTxt}>
+              {recLabel}
+            </span>
+          </div>
+          <span class="de-vo-timer" aria-label="Timer">{timerText}</span>
+        </div>
+
+        <div class="de-vo-wf" aria-label="Level meter" aria-hidden="true">
+          <template for:each={waveBarItems} for:item="row">
+            <div
+              key={row.id}
+              class={row.barClass}
+              style={row.barStyle}
+            ></div>
+          </template>
+        </div>
+
+        <p class={classStatus}>
+          <template if:true={isSaving}>
+            <lightning-spinner
+              class="de-vo-spin"
+              size="x-small"
+              alternative-text="Saving"
+            ></lightning-spinner>
+          </template>
+          {statusMessage}
+        </p>
+      </div>
+
+      <ul class="de-vo-metas" role="list">
+        <li class="de-vo-mcard" role="listitem">
+          <p class="de-vo-mlab">Duration</p>
+          <p class="de-vo-mval de-vo-mono">{metaDuration}</p>
+        </li>
+        <li class="de-vo-mcard" role="listitem">
+          <p class="de-vo-mlab">Status</p>
+          <p class={mvalStatus}>
+            {metaStatus}
+          </p>
+        </li>
+        <!-- <li class="de-vo-mcard" role="listitem">
+          <p class="de-vo-mlab">Quality</p>
+          <p class={mvalQuality}>
+            {metaQuality}
+          </p>
+        </li> -->
+        <li class="de-vo-mcard" role="listitem">
+          <p class="de-vo-mlab">Format</p>
+          <p class={mvalFormat}>
+            {metaFormat}
+          </p>
+        </li>
+      </ul>
+
+      <template if:true={showPlayback}>
+        <div class="de-vo-playback" aria-label="Saved recording playback">
+          <div class="de-vo-playback-row">
+            <div class="de-vo-playback-col de-vo-playback-col-audio">
+              <p class="de-vo-playback-lbl">Play Recording</p>
+              <audio
+                class="de-vo-audio"
+                src={filePlaybackUrl}
+                controls
+                preload="metadata"
+              ></audio>
+            </div>
+
+            <div class="de-vo-status" style="padding-top: 14px; margin-bottom: -6px;">
+              Click Next to continue; after analysis, results can appear on this contact in
+              Notes__c (see final screen).
+            </div>
+
+            <div class="de-vo-playback-col de-vo-playback-col-next">
+              <!-- <p class="de-vo-playback-lbl de-vo-playback-lbl-next">Flow</p> -->
+              <button
+                class="de-vo-btn de-vo-btn-flownext"
+                type="button"
+                title="Go to the next step in the screen flow"
+                disabled={flowNextDisabled}
+                onclick={handleFlowNext}
+              >
+                <svg
+                  class="de-vo-ico-ctl de-vo-ico-ctl-ml"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  fill="none"
+                >
+                  <line
+                    x1="5"
+                    y1="12"
+                    x2="19"
+                    y2="12"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                  <polyline
+                    points="12 5 19 12 12 19"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Next
+              </button>
+            </div>
+          </div>
+          <!-- <p class="de-vo-playback-fallback">
+            <a
+              class="de-vo-playback-link"
+              href={filePlaybackUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              Open file in a new tab
+            </a>
+            if the player does not load.
+          </p> -->
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

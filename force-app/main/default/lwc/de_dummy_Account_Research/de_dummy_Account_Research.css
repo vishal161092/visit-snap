@@ -1,0 +1,136 @@
+.de-ar {
+  --de-ar-navy: #032d60;
+  --de-ar-link: #0176d3;
+  --de-ar-icon-tint: #0176d3;
+  --de-ar-icon-bg: #f3f6f9;
+  --de-ar-icon-border: #d8dde6;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.de-ar__shell {
+  max-width: 40rem;
+  position: relative;
+  min-height: 6rem;
+}
+
+.de-ar__spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.65);
+  z-index: 2;
+}
+
+.de-ar__title {
+  color: var(--de-ar-navy);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.25;
+  font-size: 22px;
+}
+
+.de-ar__info-btn {
+  --slds-c-button-radius-border: 50%;
+}
+
+.de-ar__label {
+  color: #706e6b;
+  font-size: 0.75rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.de-ar__controls {
+  margin-top: 0.125rem;
+}
+
+.de-ar__meta {
+  color: #706e6b;
+}
+
+.de-ar-section__title {
+  color: #3e3e3c;
+  font-weight: 700;
+  margin: 0;
+}
+
+.de-ar-section__body {
+  color: #181818;
+  line-height: 1.5;
+}
+
+.de-ar__link {
+  color: var(--de-ar-link);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.de-ar__link:hover,
+.de-ar__link:focus {
+  text-decoration: underline;
+}
+
+.de-ar__feedback lightning-button-icon + lightning-button-icon {
+  margin-left: 0.25rem;
+}
+
+.de-ar-sources__trigger {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+
+.de-ar-sources__chevron {
+  color: #706e6b;
+}
+
+.de-ar-sources__list {
+  padding-left: 0;
+  list-style-position: outside;
+}
+
+.de-ar-sources__item {
+  padding-left: 0.25rem;
+}
+
+/* Neutral reference tile (replaces pink circle) */
+.de-ar-sources__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  background: var(--de-ar-icon-bg);
+  border: 1px solid var(--de-ar-icon-border);
+}
+
+.de-ar-sources__type-icon {
+  --sds-c-icon-color-foreground-default: var(--de-ar-icon-tint);
+}
+
+.de-ar-sources__link {
+  color: var(--de-ar-link);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+}
+
+.de-ar-sources__ext-label {
+  color: #706e6b;
+}
+
+.de-ar-sources__newwin {
+  --sds-c-icon-color-foreground-default: #706e6b;
+  opacity: 0.85;
+}
+
+.de-ar__cta-outline {
+  --slds-c-button-neutral-color-background: #ffffff;
+}

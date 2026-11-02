@@ -1,0 +1,215 @@
+:host {
+  --de-chm-text: #0f172a;
+  --de-chm-muted: #64748b;
+  --de-chm-line: #e8edf2;
+  --de-chm-brand: #9b0c38;
+  --de-chm-brand-soft: rgba(155, 12, 56, 0.12);
+
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  color-scheme: only light;
+  color: var(--de-chm-text);
+}
+
+.de-chm {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  padding: 0.1rem 0 0.2rem;
+  overflow: hidden;
+}
+
+.de-chm-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.de-chm-surface {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border: 1px solid var(--de-chm-line);
+  border-radius: 0.9rem;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+  padding: 0.55rem 0.65rem 0.7rem;
+}
+
+.de-chm-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.de-chm-hdr {
+  padding: 0 0.1rem 0.15rem 0.1rem;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.de-chm-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--de-chm-text);
+}
+
+.de-chm-title-grad {
+  background: linear-gradient(90deg, #6d5dd4, #0ea5e9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.de-chm-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--de-chm-muted);
+}
+
+.de-chm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media (max-width: 22rem) {
+  .de-chm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.de-chm-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0.5rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e2e8f0;
+  background: #fafafa;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.de-chm-card:hover {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
+.de-chm-card--on {
+  border-color: var(--de-chm-brand);
+  background: var(--de-chm-brand-soft);
+  box-shadow: 0 0 0 1px rgba(155, 12, 56, 0.15);
+}
+
+.de-chm-card-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.75rem;
+  color: var(--de-chm-brand);
+  background: #fff;
+  border: 1px solid rgba(155, 12, 56, 0.2);
+}
+
+.de-chm-card--on .de-chm-card-ico {
+  color: #fff;
+  background: linear-gradient(135deg, #9b0c38db, #9b0c38);
+  border-color: transparent;
+}
+
+.de-chm-card-lbl {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.de-chm-card-sub {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--de-chm-muted);
+  max-width: 11rem;
+}
+
+.de-chm-card--on .de-chm-card-sub {
+  color: #475569;
+}
+
+.de-chm-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem 0.75rem;
+  margin-top: 0.2rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.de-chm-flow-lbl {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #5b4fc4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-right: auto;
+}
+
+.de-chm-flow-dot {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: #6350ff;
+  box-shadow: 0 0 0.2rem rgba(99, 80, 255, 0.45);
+  flex-shrink: 0;
+}
+
+.de-chm-fnext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.2rem;
+  min-width: 5.5rem;
+  padding: 0 0.85rem 0 0.6rem;
+  color: #fff;
+  background: linear-gradient(135deg, #9b0c38db, #9b0c38);
+  border: none;
+  border-radius: 0.55rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.2;
+  box-shadow: 0 0.12rem 0.55rem rgba(99, 80, 255, 0.25);
+  transition: box-shadow 0.15s ease, transform 0.15s ease, opacity 0.15s;
+}
+
+.de-chm-fnext:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.de-chm-fnext:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.de-chm-fnext-ico {
+  color: #fff;
+  flex-shrink: 0;
+}

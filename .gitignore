@@ -1,0 +1,85 @@
+# This file is used for Git repositories to specify intentionally untracked files that Git should ignore. 
+# If you are not using git, you can delete this file. For more information see: https://git-scm.com/docs/gitignore
+# For useful gitignore templates see: https://github.com/github/gitignore
+
+# Salesforce cache
+.sf/
+.sfdx/
+.localdevserver/
+deploy-options.json
+
+# LWC VSCode autocomplete
+**/lwc/jsconfig.json
+
+# LWC Jest coverage reports
+coverage/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# ApexPMD cache
+.pmdCache
+
+# Eslint cache
+.eslintcache
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Local environment variables
+.env
+
+# Python Salesforce Functions
+**/__pycache__/
+**/.venv/
+**/venv/
+
+# --- shared template ---
+# Dependencies & build output
+node_modules/
+.next/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Secrets — never commit. Copy .env.example to .env and fill it in locally.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*ServiceAccount*.json
+
+# Salesforce CLI local state (contains org auth + usernames)
+.sf/
+.sfdx/
+.localdevserver/
+.agentforce-adlc/
+
+# AI assistant / editor local state
+.claude/
+.cursor/
+CLAUDE.md
+memory.md
+MEMORY.md
+
+# Logs & OS noise
+*.log
+.DS_Store
+Thumbs.db
+.idea/

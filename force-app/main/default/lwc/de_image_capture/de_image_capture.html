@@ -1,0 +1,175 @@
+<template>
+  <div class="dic dic-root">
+    <div class="dic-blob dic-blob-1" aria-hidden="true"></div>
+    <div class="dic-blob dic-blob-2" aria-hidden="true"></div>
+
+    <div class="dic-surface">
+      <div class="dic-inner">
+        <header class="dic-hdr">
+          <div class="dic-hdr-left">
+            <div class="dic-ico" aria-hidden="true">
+              <svg
+                class="dic-ico-svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+              >
+                <rect
+                  x="3"
+                  y="5"
+                  width="18"
+                  height="14"
+                  rx="2"
+                  stroke-width="2"
+                />
+                <circle cx="8.5" cy="10" r="1.5" fill="currentColor" stroke="none" />
+                <path
+                  d="M21 19l-5-5-4 4-2-2-4 4"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h2 class="dic-title">
+              {displayTitle}
+              <span class="dic-title-grad">{displayTitleGrad}</span>
+            </h2>
+          </div>
+        </header>
+
+        <p class="dic-hint">{displayHint}</p>
+
+        <div class="dic-account">
+          <!-- <span class="dic-account-lbl" id="dic-account-hdr">Account for new contacts</span> -->
+          <!-- <p class="dic-account-sub">
+            Optional. Search by name, pick a row, or paste an Account Id. Flow screens do not support the
+            standard record picker; this search works in Flow and on app pages.
+          </p> -->
+          <div class="dic-account-row">
+            <lightning-input
+              type="search"
+              label="Search Account name"
+              variant="label-hidden"
+              placeholder="Type at least 2 characters…"
+              value={accountSearchTerm}
+              disabled={uploading}
+              onchange={handleAccountSearchInput}
+              aria-labelledby="dic-account-hdr"
+            ></lightning-input>
+            <lightning-button
+              variant="neutral"
+              label="Search"
+              title="Search Accounts by name"
+              disabled={uploading}
+              onclick={handleAccountSearchClick}
+            ></lightning-button>
+          </div>
+          <template if:true={accountSearchLoading}>
+            <lightning-spinner size="small" alternative-text="Searching Accounts"></lightning-spinner>
+          </template>
+          <template if:true={hasAccountOptions}>
+            <lightning-combobox
+              label="Select Account"
+              value={pickerAccountValue}
+              options={accountOptions}
+              disabled={uploading}
+              onchange={handleAccountComboChange}
+            ></lightning-combobox>
+          </template>
+          <lightning-input
+            type="text"
+            label="Or paste Account Id"
+            placeholder="001xxxxxxxxxxxxxx"
+            value={pastedAccountId}
+            disabled={uploading}
+            onchange={handlePastedAccountIdChange}
+            onblur={handlePastedAccountIdBlur}
+          ></lightning-input>
+          <template if:true={showAccountSearchError}>
+            <p class="dic-account-err" role="alert">{accountSearchError}</p>
+          </template>
+        </div>
+
+        <div class="dic-drop" aria-busy={uploading}>
+          <input
+            data-dic="file"
+            class="dic-file-input"
+            type="file"
+            accept="image/*"
+            onchange={handleFileChange}
+            disabled={uploading}
+          />
+          <button
+            type="button"
+            class="dic-btn dic-btn-primary"
+            onclick={handlePickClick}
+            disabled={uploading}
+          >
+            <span if:false={uploading}>Upload Image</span>
+            <span if:true={uploading}>Uploading…</span>
+          </button>
+          <p class="dic-fname" if:true={displayFileName}>{displayFileName}</p>
+        </div>
+
+        <template if:true={showPreview}>
+          <div class="dic-preview-wrap">
+            <div class="dic-preview" style={previewStyle} role="img" aria-label="Uploaded image preview"></div>
+          </div>
+        </template>
+
+        <template if:true={showError}>
+          <div class="dic-err" role="alert">
+            <p class="dic-err-t">{errorMessage}</p>
+          </div>
+        </template>
+
+        <p class="dic-ok" if:true={hasFile}>{successLine}</p>
+
+        <template if:true={showFlowNext}>
+          <div class="dic-flow">
+            <!-- <div class="dic-flow-lbl" aria-hidden="true">
+              <span class="dic-flow-dot"></span> Flow
+            </div> -->
+            <button
+              class="dic-fnext"
+              type="button"
+              title="Next"
+              disabled={flowNextDisabled}
+              onclick={handleFlowNext}
+            >
+              <span>Next</span>
+              <svg
+                class="dic-fnext-ico"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <line
+                  x1="5"
+                  y1="12"
+                  x2="19"
+                  y2="12"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="12 5 19 12 12 19"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,171 @@
+<template>
+  <article class="de-ar slds-card">
+    <div class="de-ar__shell slds-p-around_medium">
+      <template lwc:if={isResearching}>
+        <lightning-spinner
+          alternative-text="Generating research"
+          size="medium"
+          class="de-ar__spinner"
+        ></lightning-spinner>
+      </template>
+      <header class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start slds-m-bottom_medium">
+        <h1 class="de-ar__title slds-text-heading_large">Account Research</h1>
+        <lightning-button-icon
+          icon-name="utility:info"
+          variant="brand"
+          alternative-text="Information"
+          title="Information"
+          class="de-ar__info-btn"
+          onclick={handleInfo}
+        ></lightning-button-icon>
+      </header>
+
+      <div class="slds-m-bottom_small">
+        <label class="de-ar__label slds-form-element__label" for="research-area"
+          >Research Area</label
+        >
+        <div class="slds-grid slds-grid_vertical-align-end slds-gutters_x-small de-ar__controls">
+          <div class="slds-col slds-grow">
+            <lightning-combobox
+              id="research-area"
+              name="researchArea"
+              variant="label-hidden"
+              value={researchAreaValue}
+              options={researchAreaOptions}
+              onchange={handleResearchAreaChange}
+              dropdown-alignment="auto"
+            ></lightning-combobox>
+          </div>
+          <div class="slds-col slds-no-flex">
+            <lightning-button
+              variant="brand"
+              label="Research"
+              icon-name="utility:search"
+              onclick={handleResearch}
+              disabled={researchDisabled}
+            ></lightning-button>
+          </div>
+        </div>
+      </div>
+
+      <p class="de-ar__meta slds-text-body_small slds-m-bottom_medium">{researchedMeta}</p>
+
+      <section class="de-ar-section slds-m-bottom_medium">
+        <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small">
+          <h2 class="de-ar-section__title slds-text-heading_small">Overview</h2>
+          <lightning-button-icon
+            icon-name="utility:edit"
+            variant="border-filled"
+            alternative-text="Edit overview"
+            title="Edit"
+            onclick={handleEditOverview}
+          ></lightning-button-icon>
+        </div>
+        <div class="de-ar-section__body">
+          <lightning-formatted-rich-text value={overviewHtml}></lightning-formatted-rich-text>
+        </div>
+      </section>
+
+      <section class="de-ar-section slds-m-bottom_small">
+        <h2 class="de-ar-section__title slds-text-heading_small slds-m-bottom_x-small">
+          {coachingSectionTitle}
+        </h2>
+        <div class="de-ar-section__body">
+          <template lwc:if={coachingBody}>
+            <p class="slds-text-body_regular">{coachingBody}</p>
+          </template>
+          <template lwc:else>
+            <p class="slds-text-body_regular slds-text-color_weak">No secondary narrative yet.</p>
+          </template>
+        </div>
+      </section>
+
+      <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-bottom_medium">
+        <button
+          type="button"
+          class="slds-button slds-button_reset de-ar__link"
+          onclick={handleToggleExpand}
+        >
+          {expandLabel}
+        </button>
+        <div class="de-ar__feedback slds-button-group" role="group" aria-label="Helpful feedback">
+          <lightning-button-icon
+            icon-name="utility:like"
+            variant={thumbsUpVariant}
+            alternative-text="Thumbs up"
+            data-value="up"
+            onclick={handleFeedback}
+            class="de-ar__feedback-btn"
+          ></lightning-button-icon>
+          <lightning-button-icon
+            icon-name="utility:dislike"
+            variant={thumbsDownVariant}
+            alternative-text="Thumbs down"
+            data-value="down"
+            onclick={handleFeedback}
+            class="de-ar__feedback-btn"
+          ></lightning-button-icon>
+        </div>
+      </div>
+
+      <div class="de-ar-sources slds-m-bottom_large">
+        <button
+          type="button"
+          class="de-ar-sources__trigger slds-button slds-button_reset slds-grid slds-grid_vertical-align-center"
+          onclick={handleToggleSources}
+          aria-expanded={sourcesExpanded}
+        >
+          <lightning-icon
+            icon-name={sourcesChevronIcon}
+            size="x-small"
+            class="de-ar-sources__chevron slds-m-right_x-small"
+          ></lightning-icon>
+          <span class="de-ar-section__title slds-text-heading_small">{sourcesCountLabel}</span>
+        </button>
+        <div class={sourcesSectionClass}>
+          <ol class="de-ar-sources__list slds-list_ordered slds-m-top_small slds-m-left_medium">
+            <template for:each={sources} for:item="src">
+              <li key={src.id} class="de-ar-sources__item slds-m-bottom_small">
+                <div class="slds-grid slds-grid_vertical-align-start">
+                  <span class="de-ar-sources__icon-wrap slds-m-right_small" aria-hidden="true">
+                    <lightning-icon
+                      icon-name={src.iconName}
+                      size="x-small"
+                      class="de-ar-sources__type-icon"
+                    ></lightning-icon>
+                  </span>
+                  <div class="slds-grow">
+                    <a
+                      href={src.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="de-ar-sources__link"
+                      >{src.title}</a
+                    >
+                    <div class="slds-grid slds-grid_vertical-align-center slds-m-top_xx-small">
+                      <lightning-icon
+                        icon-name="utility:new_window"
+                        size="xx-small"
+                        class="de-ar-sources__newwin slds-m-right_xx-small"
+                      ></lightning-icon>
+                      <span class="de-ar-sources__ext-label slds-text-body_small">External Link</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </template>
+          </ol>
+        </div>
+      </div>
+
+      <div class="slds-align_absolute-center">
+        <lightning-button
+          variant="neutral"
+          label="Add Results to Account"
+          onclick={handleAddResults}
+          class="de-ar__cta-outline"
+        ></lightning-button>
+      </div>
+    </div>
+  </article>
+</template>

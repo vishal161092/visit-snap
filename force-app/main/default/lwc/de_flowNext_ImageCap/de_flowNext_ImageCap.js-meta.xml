@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>66.0</apiVersion>
+  <isExposed>true</isExposed>
+  <description
+  >Flow intro: start the client POC notes journey (voice or image). Same look as de_flowNextButton.</description>
+  <targets>
+    <target>lightning__FlowScreen</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__FlowScreen">
+      <property
+        name="titleAccent"
+        type="String"
+        label="Title accent"
+        default="Client POC notes"
+        description="Highlighted title segment (dark text treatment)."
+        role="inputOnly"
+      />
+      <property
+        name="introText"
+        type="String"
+        label="Intro text"
+        default="Capture Client POC's additional notes via either voice or image upload."
+        description="Body copy under the title."
+        role="inputOnly"
+      />
+      <property
+        name="buttonLabel"
+        type="String"
+        label="Button label"
+        default="Start"
+        description="Primary button label."
+        role="inputOnly"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

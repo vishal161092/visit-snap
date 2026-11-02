@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>66.0</apiVersion>
+  <isExposed>true</isExposed>
+  <description>Light end-of-flow completion screen for Contact-based POC notes flows — same look as the voice and final analysis components.</description>
+  <targets>
+    <target>lightning__AppPage</target>
+    <target>lightning__RecordPage</target>
+    <target>lightning__HomePage</target>
+    <target>lightning__FlowScreen</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__AppPage,lightning__HomePage">
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+    </targetConfig>
+    <targetConfig targets="lightning__RecordPage">
+      <objects>
+        <object>Contact</object>
+      </objects>
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+    </targetConfig>
+    <targetConfig targets="lightning__FlowScreen">
+      <property
+        name="message"
+        type="String"
+        label="Message"
+        default="Your notes have been processed."
+        description="Main line shown under the checkmark (e.g. that notes capture or analysis finished)."
+        role="inputOnly"
+      />
+      <property
+        name="titleText"
+        type="String"
+        label="Title (first part)"
+        default="All set"
+        description="Text before the gradient word."
+        role="inputOnly"
+      />
+      <property
+        name="titleGrad"
+        type="String"
+        label="Title (gradient part)"
+        default="Complete"
+        description="Second title segment with the purple/cyan gradient."
+        role="inputOnly"
+      />
+      <property
+        name="badge"
+        type="String"
+        label="Status badge (optional)"
+        description="Optional pill on the right, e.g. 'Analysis done' — leave empty to hide."
+        role="inputOnly"
+      />
+      <property
+        name="subtext"
+        type="String"
+        label="Subtext (optional)"
+        description="Smaller line under the main message; optional."
+        role="inputOnly"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

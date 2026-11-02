@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <description>Records audio, saves to the Contact's Files (FirstPublishLocationId), and outputs ContentDocument Id to a Screen Flow. Downstream steps can analyze the file and write JSON to Contact.Notes__c for de_final_screen.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contact</object>
+            </objects>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="recordId"
+                type="String"
+                label="Record ID (Contact)"
+                description="Contact Id to attach the audio file to (Files). Use the same contact whose Notes__c field your flow updates after analysis."
+                role="inputOnly"
+            />
+            <property
+                name="contentDocumentId"
+                type="String"
+                label="Content Document ID"
+                description="Id of the ContentDocument created in Files. Map this to a flow variable to use in later elements."
+                role="outputOnly"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

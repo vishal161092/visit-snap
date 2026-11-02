@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+>
+  <apiVersion>62.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>de_CaseHomeConflict</masterLabel>
+  <description>de_ case conflict: Home / logged-in partner — open cases you own (getConflictForCurrentPartner). Legacy caseRecordId kept for orgs that still reference it on a Home page.</description>
+  <targets>
+    <target>lightning__HomePage</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__HomePage">
+      <property
+        name="caseRecordId"
+        type="String"
+        label="de Case record Id (legacy)"
+        description="Optional. Not used by the component. Clear this in App Builder when you are ready, then the property can be removed in a follow-up deploy."
+        default=""
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

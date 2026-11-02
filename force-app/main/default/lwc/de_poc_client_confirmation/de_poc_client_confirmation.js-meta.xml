@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>66.0</apiVersion>
+  <isExposed>true</isExposed>
+  <description
+  >Confirmation screen matching de_final_screen visuals: POCs created for clients. For Flow or app pages.</description>
+  <targets>
+    <target>lightning__AppPage</target>
+    <target>lightning__HomePage</target>
+    <target>lightning__FlowScreen</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__AppPage,lightning__HomePage">
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+    </targetConfig>
+    <targetConfig targets="lightning__FlowScreen">
+      <property
+        name="titleText"
+        type="String"
+        label="Title (first part)"
+        default="Clients"
+        description="Heading before the gradient segment."
+        role="inputOnly"
+      />
+      <property
+        name="titleGrad"
+        type="String"
+        label="Title (gradient part)"
+        default="POCs ready"
+        description="Second title segment with purple/cyan gradient."
+        role="inputOnly"
+      />
+      <property
+        name="badge"
+        type="String"
+        label="Status badge (optional)"
+        description="Optional pill on the right; leave empty to hide."
+        role="inputOnly"
+      />
+      <property
+        name="confirmationMessage"
+        type="String"
+        label="Confirmation message"
+        default="All the POCs for the respective clients have been created."
+        description="Main confirmation line (banner and card body)."
+        role="inputOnly"
+      />
+      <property
+        name="subtext"
+        type="String"
+        label="Subtext (optional)"
+        description="Optional smaller line under the confirmation in the card."
+        role="inputOnly"
+      />
+      <property
+        name="cardSectionLabel"
+        type="String"
+        label="Card section label"
+        default="Confirmation"
+        description="Uppercase label in the card header row."
+        role="inputOnly"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

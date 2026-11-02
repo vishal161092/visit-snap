@@ -1,0 +1,332 @@
+<template>
+  <div class="de-fs de-fs-root">
+    <div class="de-fs-blob de-fs-blob-1" aria-hidden="true"></div>
+    <div class="de-fs-blob de-fs-blob-2" aria-hidden="true"></div>
+
+    <div class="de-fs-surface">
+      <div class="de-fs-inner">
+        <header class="de-fs-hdr">
+          <div class="de-fs-hdr-left">
+            <div class="de-fs-ico" aria-hidden="true">
+              <svg
+                class="de-fs-ico-svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 10v2a7 7 0 0 1-14 0v-2"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="12"
+                  y1="19"
+                  x2="12"
+                  y2="23"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="8"
+                  y1="23"
+                  x2="16"
+                  y2="23"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <h2 class="de-vo-title">
+              {displayTitle} <span class="de-vo-title-grad">{displayTitleGrad}</span>
+            </h2>
+          </div>
+          <div class="de-fs-badge" if:true={hasBadge} title={displayBadge}>
+            <span class="de-fs-badge-dot" aria-hidden="true"></span>
+            <span class="de-fs-badge-txt">{displayBadge}</span>
+          </div>
+        </header>
+
+        <template if:true={isLoading}>
+          <div class="de-fs-state">
+            <lightning-spinner
+              size="small"
+              alternative-text="Loading notes analysis"
+            ></lightning-spinner>
+            <p class="de-fs-hint">Loading contact data…</p>
+          </div>
+        </template>
+
+        <template if:true={showParseError}>
+          <div class="de-fs-err" role="alert">
+            <p class="de-fs-err-t">{showParseError}</p>
+          </div>
+        </template>
+
+        <template if:true={wireErrorMessage}>
+          <div class="de-fs-err" role="alert">
+            <p class="de-fs-err-t">{wireErrorMessage}</p>
+          </div>
+        </template>
+
+        <template if:true={visNoRecord}>
+          <div class="de-fs-empt" role="status">
+            <p class="de-fs-empt-t">
+              Add this component to a <strong>Contact</strong> record page, or pass a Contact
+              <code>recordId</code> in Flow.
+            </p>
+          </div>
+        </template>
+
+        <template if:true={visEmptyField}>
+          <div class="de-fs-empt" role="status">
+            <p class="de-fs-empt-t">
+              No notes analysis yet. When processing completes, store JSON in
+              <code>Notes__c</code>.
+            </p>
+          </div>
+        </template>
+
+        <template if:true={visNoContent}>
+          <div class="de-fs-empt" role="status">
+            <p class="de-fs-empt-t">
+              <code>Notes__c</code> is present but does not contain content to show.
+            </p>
+          </div>
+        </template>
+
+        <template if:true={hasSuccessBanner}>
+          <p class="de-fs-banner">{successBannerText}</p>
+        </template>
+
+        <div class="de-fs-stack" if:true={showStack}>
+          <template if:true={hasOriginal}>
+            <section class="de-fs-card" aria-label="Original input">
+              <div class="de-fs-card-hd">
+                <div class="de-fs-card-ico de-fs-card-ico--transcript" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <span class="de-fs-card-lbl">Original input</span>
+                <div class="de-fs-miniwave" aria-hidden="true">
+                  <template for:each={waveBars} for:item="bar">
+                    <div class="de-fs-mw-bar" key={bar.key} style={bar.style}></div>
+                  </template>
+                </div>
+              </div>
+              <div class="de-fs-card-bd">
+                <p class="de-fs-text-original">{displayOriginal}</p>
+                <div class="de-fs-lang-row" if:true={hasLanguagePills}>
+                  <template for:each={languagePills} for:item="pill">
+                    <span class={pill.pillClass} key={pill.key}>{pill.label}</span>
+                  </template>
+                  <template if:true={hasLanguageSummary}>
+                    <span class="de-fs-lang-pill de-fs-lang-meta"
+                      >{languageSummary} languages detected</span
+                    >
+                  </template>
+                </div>
+              </div>
+            </section>
+          </template>
+
+          <template if:true={kpiCount}>
+            <div class={kpiRowClass}>
+              <template if:true={hasSentimentKpi}>
+                <div class="de-fs-kpi">
+                  <div
+                    class="de-fs-kpi-ico de-fs-kpi-ico--sent"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <circle cx="12" cy="12" r="10" stroke-width="2" />
+                      <line x1="8" y1="15" x2="16" y2="15" stroke-width="2" />
+                      <line x1="9" y1="9" x2="9" y2="9" stroke-width="2" />
+                      <line x1="15" y1="9" x2="15" y2="9" stroke-width="2" />
+                    </svg>
+                  </div>
+                  <div class="de-fs-kpi-body">
+                    <p class="de-fs-kpi-lbl">Sentiment</p>
+                    <p class="de-fs-kpi-val de-fs-kpi-val--neutral">
+                      {displaySentiment}
+                    </p>
+                    <template if:true={showSentimentMeter}>
+                      <div class="de-fs-meter">
+                        <div class="de-fs-meter-ln">
+                          <span>Negative</span><span>Positive</span>
+                        </div>
+                        <div
+                          class="de-fs-meter-track"
+                          role="img"
+                          aria-label="Sentiment meter"
+                        >
+                          <div
+                            class="de-fs-meter-fill de-fs-meter-fill--sent"
+                            style={sentimentBarStyle}
+                          ></div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+              <template if:true={hasTonalityKpi}>
+                <div class="de-fs-kpi">
+                  <div
+                    class="de-fs-kpi-ico de-fs-kpi-ico--tone"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="de-fs-kpi-body">
+                    <p class="de-fs-kpi-lbl">Tonality</p>
+                    <p class="de-fs-kpi-val de-fs-kpi-val--urgent">
+                      {displayTonality}
+                    </p>
+                    <template if:true={showTonalityMeter}>
+                      <div class="de-fs-meter">
+                        <div class="de-fs-meter-ln">
+                          <span>Calm</span><span>Urgent</span>
+                        </div>
+                        <div
+                          class="de-fs-meter-track"
+                          role="img"
+                          aria-label="Tonality meter"
+                        >
+                          <div
+                            class="de-fs-meter-fill de-fs-meter-fill--urgent"
+                            style={tonalityBarStyle}
+                          ></div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <template if:true={hasTranslation}>
+            <section class="de-fs-card" aria-label="English translation">
+              <div class="de-fs-card-hd">
+                <div
+                  class="de-fs-card-ico de-fs-card-ico--globe"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <circle cx="12" cy="12" r="10" stroke-width="2" />
+                    <line x1="2" y1="12" x2="22" y2="12" stroke-width="2" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <span class="de-fs-card-lbl">English translation</span>
+              </div>
+              <div class="de-fs-card-bd">
+                <p class="de-fs-translation">"{translationBody}"</p>
+                <template if:true={hasEntities}>
+                  <div class="de-fs-divider" role="separator"></div>
+                  <p class="de-fs-ent-hd">Key entities detected</p>
+                  <div class="de-fs-entities">
+                    <template for:each={entityChips} for:item="ent">
+                      <span class={ent.entClass} key={ent.key}>{ent.text}</span>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </section>
+          </template>
+        </div>
+
+        <template if:true={showFlowNext}>
+          <div class="de-fs-flow">
+            <div class="de-fs-flow-lbl" aria-hidden="true">
+              <span class="de-fs-flow-dot"></span> Flow
+            </div>
+            <button
+              class="de-vo-btn-flownext de-fs-fnb"
+              type="button"
+              title="Next"
+              disabled={flowNextDisabled}
+              onclick={handleFlowNext}
+            >
+              <span>Next</span>
+              <svg
+                class="de-vo-ico-ctl-ml"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <line
+                  x1="5"
+                  y1="12"
+                  x2="19"
+                  y2="12"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="12 5 19 12 12 19"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>

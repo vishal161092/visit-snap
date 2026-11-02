@@ -1,0 +1,110 @@
+<template>
+  <lightning-card title="Contract Creator" icon-name="standard:document">
+    <div class="slds-p-around_medium de-shell">
+      <template lwc:if={loadError}>
+        <p class="slds-text-color_error">{loadError}</p>
+      </template>
+      <template lwc:elseif={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template lwc:else>
+        <!-- <p class="slds-text-body_small slds-m-bottom_small">
+          <strong>{templateName}</strong> — demo template from Static Resource
+          <code>de_contract_template_demo</code>
+        </p> -->
+        <lightning-progress-indicator
+          current-step={progressStep}
+          type="path"
+          variant="base"
+        >
+          <lightning-progress-step label="Fields" value="1"></lightning-progress-step>
+          <lightning-progress-step label="Signatures" value="2"></lightning-progress-step>
+          <lightning-progress-step label="Preview and PDF" value="3"></lightning-progress-step>
+        </lightning-progress-indicator>
+
+        <template lwc:if={isStep1}>
+          <div class="de-step">
+            <template for:each={fieldRows} for:item="f">
+              <lightning-input
+                key={f.key}
+                label={f.label}
+                value={f._value}
+                required={f.required}
+                data-key={f.key}
+                onchange={handleFieldChange}
+                class="slds-m-bottom_x-small"
+              ></lightning-input>
+            </template>
+          </div>
+        </template>
+
+        <div class={signaturePanelClass}>
+          <!-- <p class="slds-text-body_small slds-m-bottom_x-small de-sig-hint">
+            Sign on each pad (step 2). Pads stay mounted off-screen so they export to the PDF.
+          </p> -->
+          <template for:each={signatures} for:item="sig">
+            <div key={sig.key} class="de-sig-row">
+              <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                <span class="slds-text-title_caps">{sig.label}</span>
+                <lightning-button
+                  type="button"
+                  variant="base"
+                  label="Clear"
+                  data-key={sig.key}
+                  onclick={handleClearSignature}
+                ></lightning-button>
+              </div>
+              <canvas
+                class="de-sig"
+                width="480"
+                height="140"
+                data-key={sig.key}
+                onpointerdown={handlePointerDown}
+                onpointermove={handlePointerMove}
+                onpointerup={handlePointerUp}
+                onpointercancel={handlePointerUp}
+              ></canvas>
+            </div>
+          </template>
+        </div>
+
+        <template lwc:if={isStep3}>
+          <div class="de-step">
+            <p class="slds-text-body_small slds-m-bottom_x-small">Preview </p>
+            <div class="de-preview">
+              <lightning-formatted-rich-text
+                value={previewHtml}
+              ></lightning-formatted-rich-text>
+            </div>
+          </div>
+        </template>
+
+        <div class="slds-m-top_medium slds-grid slds-grid_align-spread">
+          <lightning-button
+            variant="neutral"
+            label="Back"
+            onclick={handleBack}
+            disabled={isBackDisabled}
+          ></lightning-button>
+          <div>
+            <template lwc:if={isStep3}>
+              <lightning-button
+                variant="brand"
+                label="Generate and Attach PDF"
+                onclick={handleGeneratePdf}
+                disabled={isGenerating}
+              ></lightning-button>
+            </template>
+            <template lwc:else>
+              <lightning-button
+                variant="brand"
+                label="Next"
+                onclick={handleNext}
+              ></lightning-button>
+            </template>
+          </div>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>

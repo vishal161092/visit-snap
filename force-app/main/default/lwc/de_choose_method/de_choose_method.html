@@ -1,0 +1,112 @@
+<template>
+  <div class="de-chm de-chm-root">
+    <div class="de-chm-blob de-chm-blob-1" aria-hidden="true"></div>
+    <div class="de-chm-blob de-chm-blob-2" aria-hidden="true"></div>
+
+    <div class="de-chm-surface">
+      <div class="de-chm-inner">
+        <header class="de-chm-hdr">
+          <h2 class="de-chm-title">
+            {displayTitle}
+            <span class="de-chm-title-grad">{displayTitleGrad}</span>
+          </h2>
+        </header>
+
+        <p class="de-chm-hint">{displayHint}</p>
+
+        <div class="de-chm-grid" role="group" aria-label="Notes capture method">
+          <button
+            type="button"
+            class={voiceCardClass}
+            onclick={handlePickVoice}
+            aria-pressed={isVoiceSelected}
+          >
+            <span class="de-chm-card-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor">
+                <path
+                  d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 10v2a7 7 0 0 1-14 0v-2"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line x1="12" y1="19" x2="12" y2="23" stroke-width="2" stroke-linecap="round" />
+                <line x1="8" y1="23" x2="16" y2="23" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="de-chm-card-lbl">Voice</span>
+            <span class="de-chm-card-sub">Record audio notes</span>
+          </button>
+
+          <button
+            type="button"
+            class={imageCardClass}
+            onclick={handlePickImage}
+            aria-pressed={isImageSelected}
+          >
+            <span class="de-chm-card-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2" />
+                <circle cx="8.5" cy="10" r="1.5" fill="currentColor" stroke="none" />
+                <path
+                  d="M21 19l-5-5-4 4-2-2-4 4"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span class="de-chm-card-lbl">Image</span>
+            <span class="de-chm-card-sub">Upload visiting-card photo</span>
+          </button>
+        </div>
+
+        <template if:true={showFlowNext}>
+          <div class="de-chm-flow">
+            <!-- <div class="de-chm-flow-lbl" aria-hidden="true">
+              <span class="de-chm-flow-dot"></span> Flow
+            </div> -->
+            <button
+              class="de-chm-fnext"
+              type="button"
+              title="Next"
+              disabled={flowNextDisabled}
+              onclick={handleFlowNext}
+            >
+              <span>Next</span>
+              <svg
+                class="de-chm-fnext-ico"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <line
+                  x1="5"
+                  y1="12"
+                  x2="19"
+                  y2="12"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="12 5 19 12 12 19"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>

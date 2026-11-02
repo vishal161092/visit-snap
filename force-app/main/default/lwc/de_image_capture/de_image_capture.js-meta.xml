@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>66.0</apiVersion>
+  <isExposed>true</isExposed>
+  <description
+  >Upload visiting-card image; optionally pick an Account so new contacts attach to it. Outputs Content Document Id and Account Id for Flow.</description>
+  <targets>
+    <target>lightning__FlowScreen</target>
+    <target>lightning__AppPage</target>
+    <target>lightning__HomePage</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__AppPage,lightning__HomePage">
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+    </targetConfig>
+    <targetConfig targets="lightning__FlowScreen">
+      <property
+        name="recordId"
+        type="String"
+        label="Record ID (optional)"
+        description="If set, the uploaded file is linked to this record (for example Visit__c). Leave blank to store the file for the running user only."
+        role="inputOnly"
+      />
+      <property
+        name="defaultAccountId"
+        type="String"
+        label="Default Account Id (optional)"
+        description="When set (e.g. from a prior Flow Lookup), pre-fills the Account output without searching."
+        role="inputOnly"
+      />
+      <property
+        name="titleText"
+        type="String"
+        label="Title (first part)"
+        default="Visiting cards"
+        description="Heading before the gradient segment."
+        role="inputOnly"
+      />
+      <property
+        name="titleGrad"
+        type="String"
+        label="Title (gradient part)"
+        default="Capture"
+        description="Second heading segment with accent styling."
+        role="inputOnly"
+      />
+      <property
+        name="hintText"
+        type="String"
+        label="Hint text"
+        default="Upload a clear photo. Later steps can scan multiple cards from this image."
+        description="Help text under the heading."
+        role="inputOnly"
+      />
+      <property
+        name="fileTitle"
+        type="String"
+        label="File title (optional)"
+        description="Title stored in Salesforce Files. Defaults to the original file name."
+        role="inputOnly"
+      />
+      <property
+        name="requireUploadBeforeNext"
+        type="Boolean"
+        label="Require upload before Next"
+        default="true"
+        description="When true, the Flow Next control stays disabled until an upload succeeds."
+        role="inputOnly"
+      />
+      <property
+        name="contentDocId"
+        type="String"
+        label="Content Document Id"
+        description="Output: the 15- or 18-character ContentDocument Id returned after a successful upload. Map this attribute to a Flow Text variable (or formula) and use it in Get Records, Apex, or subflows."
+        role="outputOnly"
+      />
+      <property
+        name="accountId"
+        type="String"
+        label="Account Id"
+        description="Output: Account selected in the screen (18-character Id). Map to a Flow Text variable and pass to Create Contacts from Visiting Card JSON so contacts are created under this Account."
+        role="outputOnly"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

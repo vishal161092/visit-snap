@@ -1,0 +1,109 @@
+<template>
+  <div class="de-flow-root">
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+
+    <div class="de-flow-shell">
+    
+    <div style="display:flex;">
+      
+      <!-- <div class="de-flow-badge">
+        <span class="de-flow-badge-dot" aria-hidden="true"></span>
+        Flow
+      </div> -->
+
+      <div class="de-flow-icon" aria-hidden="true">
+        <svg
+          class="de-flow-icon-svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          fill="none"
+        >
+          <path
+            d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M8 8h3M8 12h8M8 16h5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div>
+        <h1 class="de-flow-title"><span class="de-flow-title-accent">Capture Client POCs</span></h1>
+      </div>
+
+      <!-- <div class="de-flow-wave" aria-hidden="true">
+        <div class="de-flow-wave-bar" style="--d:0.5s;--min:4px;--max:10px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.6s;--min:3px;--max:16px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.7s;--min:4px;--max:20px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.55s;--min:2px;--max:18px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.65s;--min:3px;--max:14px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.5s;--min:4px;--max:12px"></div>
+        <div class="de-flow-wave-bar" style="--d:0.6s;--min:2px;--max:10px"></div>
+      </div> -->
+
+    </div>
+      <!-- <p class="de-flow-sub">Move to the next step in your flow when you are ready.</p> -->
+
+      <div class="de-flow-divider" role="separator"></div>
+
+      <!-- <div class="de-flow-stats" role="presentation">
+        <div class="de-flow-stat">
+          <p class="de-flow-stat-num">1</p>
+          <p class="de-flow-stat-lbl">Tap</p>
+        </div>
+        <div class="de-flow-stat">
+          <p class="de-flow-stat-num">→</p>
+          <p class="de-flow-stat-lbl">Progress</p>
+        </div>
+        <div class="de-flow-stat">
+          <p class="de-flow-stat-num">✓</p>
+          <p class="de-flow-stat-lbl">Onward</p>
+        </div>
+      </div> -->
+
+      <div class="de-flow-actions">
+        <button
+          class="de-flow-btn de-flow-btn-primary"
+          type="button"
+          onclick={handleNext}
+        >
+          <span class="de-flow-btn-ico" aria-hidden="true">
+            <svg
+              class="de-flow-ico"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+            >
+              <line
+                x1="5"
+                y1="12"
+                x2="19"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+              <polyline
+                points="12 5 19 12 12 19"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          Capture Details
+        </button>
+      </div>
+    </div>
+  </div>
+</template>

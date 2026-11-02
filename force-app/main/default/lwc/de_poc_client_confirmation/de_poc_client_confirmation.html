@@ -1,0 +1,131 @@
+<template>
+  <div class="de-fs de-fs-root">
+    <div class="de-fs-blob de-fs-blob-1" aria-hidden="true"></div>
+    <div class="de-fs-blob de-fs-blob-2" aria-hidden="true"></div>
+
+    <div class="de-fs-surface">
+      <div class="de-fs-inner">
+        <header class="de-fs-hdr">
+          <div class="de-fs-hdr-left">
+            <div class="de-fs-ico" aria-hidden="true">
+              <svg
+                class="de-fs-ico-svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline
+                  points="22 4 12 14.01 9 11.01"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h2 class="de-vo-title">
+              {displayTitle}
+              <span class="de-vo-title-grad">{displayTitleGrad}</span>
+            </h2>
+          </div>
+          <div class="de-fs-badge" if:true={hasBadge} title={displayBadge}>
+            <span class="de-fs-badge-dot" aria-hidden="true"></span>
+            <span class="de-fs-badge-txt">{displayBadge}</span>
+          </div>
+        </header>
+
+        <!-- <p class="de-fs-banner" role="status">{displayConfirmation}</p> -->
+
+        <div class="de-fs-stack">
+          <section class="de-fs-card" aria-label="Confirmation details">
+            <div class="de-fs-card-hd">
+              <div
+                class="de-fs-card-ico de-fs-card-ico--poc"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="13"
+                  height="13"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <circle cx="9" cy="7" r="4" stroke-width="2" />
+                  <path
+                    d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <span class="de-fs-card-lbl">{displayCardSectionLabel}</span>
+            </div>
+            <div class="de-fs-card-bd">
+              <p class="de-fs-text-original">{displayConfirmation}</p>
+              <template if:true={hasSubtext}>
+                <div class="de-fs-divider" role="separator"></div>
+                <p class="de-fs-translation">{subtextLine}</p>
+              </template>
+            </div>
+          </section>
+        </div>
+
+        <!-- <template if:true={showFlowNext}>
+          <div class="de-fs-flow">
+            <div class="de-fs-flow-lbl" aria-hidden="true">
+              <span class="de-fs-flow-dot"></span> Flow
+            </div>
+            <button
+              class="de-vo-btn-flownext de-fs-fnb"
+              type="button"
+              title="Next"
+              disabled={flowNextDisabled}
+              onclick={handleFlowNext}
+            >
+              <span>Next</span>
+              <svg
+                class="de-vo-ico-ctl-ml"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <line
+                  x1="5"
+                  y1="12"
+                  x2="19"
+                  y2="12"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="12 5 19 12 12 19"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </template> -->
+      </div>
+    </div>
+  </div>
+</template>
